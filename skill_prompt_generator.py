@@ -1,4 +1,4 @@
-"""Standalone skill prompt generator compatible with MieNodes LLM connectors."""
+"""Standalone skill prompt generator using an LLM service connector."""
 import base64
 import copy
 import hashlib

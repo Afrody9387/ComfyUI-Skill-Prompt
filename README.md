@@ -1,6 +1,6 @@
 # ComfyUI Skill Prompt
 
-在 ComfyUI 中读取本地 `SKILL.md` 和参考文档，用 LLM 编写图片或视频提示词。连接器、图片版、视频版在同一个插件内，**无需安装 MieNodes**。
+在 ComfyUI 中读取本地 `SKILL.md` 和参考文档，用 LLM 编写图片或视频提示词。连接器、图片版、视频版在同一个插件内，可独立安装使用。
 
 Local skill-driven image and video prompt writing for ComfyUI, with a simple OpenAI-compatible LLM connector. This plugin writes prompts; it does not generate images or videos itself.
 
@@ -105,7 +105,7 @@ comfyui_skill_prompt/
 ## 接口兼容与更新
 
 支持 **OpenAI Chat Completions 兼容接口**。直接使用输入的 Bearer 密钥，不读取密钥配置文件；本地免密服务可留空。密钥会随普通工作流保存，分享工作流前请清空。
-原生 Anthropic、Gemini 等不同协议需对应适配器；可继续连接兼容 `LLMServiceConnector` 的第三方连接器，包括 MieNodes。
+原生 Anthropic、Gemini 等不同协议需对应适配器；也可连接兼容 `LLMServiceConnector` 的第三方连接器。
 
 不固定发送 `response_format`、`top_k` 等附加参数。只有服务明确拒绝某采样参数时才调整重试；不会因超时或服务端错误自动重复生成请求。
 
