@@ -1,0 +1,13 @@
+[project]
+name = "comfyui-skill-prompt"
+version = "0.1.0"
+description = "Local skill-driven image and video prompt writing with a simple OpenAI-compatible LLM connector."
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+dependencies = ["requests", "Pillow", "aiohttp"]
+
+[project.urls]
+Repository = "https://github.com/Afrody9387/ComfyUI-Skill-Prompt"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,190 @@
+{
+  "last_node_id": 3,
+  "last_link_id": 2,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "SkillLLMServiceConnector",
+      "pos": [
+        40,
+        80
+      ],
+      "size": [
+        420,
+        280
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "llm_service_connector",
+          "type": "LLMServiceConnector",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SkillLLMServiceConnector"
+      },
+      "title": "1. Fill API URL/key, then fetch a model",
+      "widgets_values": [
+        "https://api.venice.ai/api/v1",
+        "",
+        "",
+        120
+      ]
+    },
+    {
+      "id": 2,
+      "type": "SkillVideoPromptGenerator",
+      "pos": [
+        510,
+        80
+      ],
+      "size": [
+        420,
+        900
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "llm_service_connector",
+          "type": "LLMServiceConnector",
+          "link": 1
+        },
+        {
+          "name": "first_frame",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "last_frame",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "reference_images",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "reference_video",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video_prompt",
+          "type": "STRING",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "skill_context",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "load_report",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SkillVideoPromptGenerator"
+      },
+      "title": "2. Choose skill and write your request",
+      "widgets_values": [
+        "t2v",
+        "A paper boat drifts down a quiet stream. The camera follows it past mossy stones in soft morning light.",
+        "example-video",
+        0,
+        "fixed",
+        1280,
+        720,
+        6.0,
+        "none",
+        "en",
+        8,
+        "auto",
+        "referenced_text",
+        "",
+        0.4,
+        8192,
+        120000,
+        240
+      ]
+    },
+    {
+      "id": 3,
+      "type": "PreviewAny",
+      "pos": [
+        990,
+        80
+      ],
+      "size": [
+        450,
+        450
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "title": "3. Generated prompt",
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "LLMServiceConnector"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8,
+      "offset": [
+        20,
+        20
+      ]
+    }
+  },
+  "version": 0.4
+}
