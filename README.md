@@ -33,6 +33,18 @@ python -m pip install -r comfyui_skill_prompt/requirements.txt
 
 将 [图片示例工作流](examples/image_prompt.json) 或 [视频示例工作流](examples/video_prompt.json) 拖进 ComfyUI。
 
+图片示例使用随包提供的 **Qwen Image 2.1** skill；视频示例使用 **MiniMax H3 官方** skill。首次使用视频示例时，在插件目录运行下面命令，从官方地址安装 H3 skill 与许可文件，然后刷新浏览器：
+
+```sh
+python scripts/install_h3_skill.py
+```
+
+Windows 便携版也可在便携包根目录运行：
+
+```powershell
+.\python_embeded\python.exe .\ComfyUI\custom_nodes\comfyui_skill_prompt\scripts\install_h3_skill.py
+```
+
 1. 在连接器填写 `base_url` 和 `api_key`。例如 Venice 为 `https://api.venice.ai/api/v1`，SiliconFlow 为 `https://api.siliconflow.cn/v1`，本地兼容接口可填 `http://127.0.0.1:1234/v1`。也接受完整 `/chat/completions` 地址。
 2. 点击 **获取模型**，搜索并选择模型；也可直接填写 `model`。服务未实现 `/models` 时，手动填写模型 ID 即可。
 3. 点击 **测试连接（发送短请求）**，查看实际回复及耗时。这会使用少量模型额度，无需运行整个工作流。
@@ -51,19 +63,22 @@ python -m pip install -r comfyui_skill_prompt/requirements.txt
 ```text
 comfyui_skill_prompt/
   skills/
-    example-image/          # 附带的基础图片示例
+    qwen-image-2-1/         # 随包附带的 Qwen Image 2.1 社区 skill
       SKILL.md
-      references/output.md
-    example-video/          # 附带的基础视频示例
+      references/...
+      LICENSE
+    h3-prompt-writing/     # 运行安装脚本后，从官方获取到本地
       SKILL.md
-      references/tasks.md
+      references/base-en.txt
+      references/ref-en.txt
+      LICENSE
     your-own-skill/
       SKILL.md
       references/...
 ```
 
 下拉菜单显示子文件夹名称。新增/删除 skill 后刷新浏览器；修改现有文件后重新运行即可，内容变更会使缓存失效。
-个人 skill 默认被 Git 忽略，不随代码提交。仓库只附带两个自行编写的基础示例，未打包个人 Qwen、MOSS、H3 等指南；需要时自行添加有权使用的 skill。
+个人 skill 默认被 Git 忽略，不随代码提交；只有明确附带的示例 skill 纳入仓库。原有 `example-image` 和 `example-video` 基础 skill 保留，已有工作流仍可继续使用。各示例的来源与许可见文末。
 
 | 参考资料模式 | 行为 |
 | --- | --- |
@@ -90,7 +105,7 @@ comfyui_skill_prompt/
 - 首帧、尾帧、参考图片、视频取样帧分别标记。视频只有画面输入，不包含音频分析。
 - `width`、`height`、`duration` 是目标视频元数据，用于编写提示词，不会设置下游视频生成节点。
 - `category` 可自由填风格或用途；`output_language` 可选英文、中文或按输入决定。
-- 视频版使用所选 skill 的格式，可自行添加 H3 等视频模型的提示词 skill；附带示例不是官方 H3 指南。
+- 视频版使用所选 skill 的格式；本视频示例选择官方 H3 skill，也可切换到其他视频模型的 skill。
 
 ## 等待时间与输出设置
 
@@ -109,7 +124,7 @@ comfyui_skill_prompt/
 
 不固定发送 `response_format`、`top_k` 等附加参数。只有服务明确拒绝某采样参数时才调整重试；不会因超时或服务端错误自动重复生成请求。
 
-Git 安装用户在插件目录运行 `git pull` 后重启 ComfyUI、刷新浏览器即可更新。自己的 skill 放在其他子文件夹内，不要修改两个附带示例文件夹。
+Git 安装用户在插件目录运行 `git pull` 后重启 ComfyUI、刷新浏览器即可更新。自己的 skill 请放在其他子文件夹内，不要直接修改随包附带的示例。H3 安装脚本保留已有的不同内容，不会覆盖本地修改。
 
 ## Development
 
@@ -121,4 +136,9 @@ node tests/test_connector_ui.mjs
 
 Tests use a local mock API, not paid LLM services. Example workflows are checked against actual node schemas and executed with a mocked API response.
 
-MIT license for this plugin and the two bundled example skills. User-supplied skills retain their own licenses.
+## 示例来源
+
+- **MiniMax H3**：使用 [MiniMax-AI 官方 h3-prompt-writing](https://github.com/MiniMax-AI/MiniMax-H3/tree/main/skills/h3-prompt-writing)。官方文档带有单独的 [Community License](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/LICENSE)，因此通过安装脚本从官方获取，不在本仓库镜像分发。
+- **Qwen Image 2.1**：使用 [iamyoki/qwen-image-2.1-skill](https://github.com/iamyoki/qwen-image-2.1-skill)，是依据 Qwen 官方提示词规范整理的社区 skill，保留作者署名与 Apache-2.0 许可，不标为阿里官方 skill。
+
+完整版本记录和许可边界见 [THIRD_PARTY.md](THIRD_PARTY.md)。插件代码及原有基础示例为 MIT；第三方 skill 和用户添加的 skill 保留各自许可。

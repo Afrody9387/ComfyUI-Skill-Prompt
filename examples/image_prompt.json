@@ -90,14 +90,14 @@
       "properties": {
         "Node name for S&R": "SkillPromptGenerator"
       },
-      "title": "2. Choose skill and write your request",
+      "title": "2. Qwen Image 2.1 prompt skill",
       "widgets_values": [
         "A small wooden cabin beside a quiet lake at sunrise, warm window light, cinematic framing.",
-        "example-image",
+        "qwen-image-2-1",
         "referenced_text",
         0,
         "fixed",
-        "",
+        "Return only the final rewritten image prompt as plain text. Do not output JSON, headings, analysis, or suggestions.",
         0.8,
         8192,
         120000,

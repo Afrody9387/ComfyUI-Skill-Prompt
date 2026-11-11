@@ -120,7 +120,7 @@ class SkillPromptGenerator(io.ComfyNode):
     @classmethod
     def define_schema(cls):
         skills = list(discover_skills()) or [_NO_SKILLS]
-        default_skill = "example-image" if "example-image" in skills else skills[0]
+        default_skill = next((name for name in ("qwen-image-2-1", "example-image") if name in skills), skills[0])
         return io.Schema(
             node_id="SkillPromptGenerator",
             display_name="Skill Prompt Generator · Skill 提示词生成器",

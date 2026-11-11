@@ -100,11 +100,11 @@
       "properties": {
         "Node name for S&R": "SkillVideoPromptGenerator"
       },
-      "title": "2. Choose skill and write your request",
+      "title": "2. Official MiniMax H3 prompt skill",
       "widgets_values": [
         "t2v",
         "A paper boat drifts down a quiet stream. The camera follows it past mossy stones in soft morning light.",
-        "example-video",
+        "h3-prompt-writing",
         0,
         "fixed",
         1280,
@@ -115,7 +115,7 @@
         8,
         "auto",
         "referenced_text",
-        "",
+        "Follow the official H3 section structure and return only the final video prompt.",
         0.4,
         8192,
         120000,

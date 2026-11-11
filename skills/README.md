@@ -1,5 +1,7 @@
 # 提示词 Skills
 
+图片示例默认使用随包提供的 `qwen-image-2-1`。视频示例默认使用 `h3-prompt-writing`，在插件目录执行 `python scripts/install_h3_skill.py` 从官方安装。来源与许可见 [THIRD_PARTY.md](../THIRD_PARTY.md)。
+
 将完整的 skill 文件夹放在这里，每个 skill 一个子文件夹：
 
 ```text

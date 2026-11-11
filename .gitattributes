@@ -4,3 +4,5 @@
 *.mjs text eol=lf
 *.md text eol=lf
 *.json text eol=lf
+# Preserve the upstream skill snapshot, including its original whitespace.
+skills/qwen-image-2-1/** -text -whitespace

@@ -44,7 +44,7 @@ class SkillVideoPromptGenerator(io.ComfyNode):
     @classmethod
     def define_schema(cls):
         skills = list(discover_skills()) or [_NO_SKILLS]
-        default_skill = "example-video" if "example-video" in skills else skills[0]
+        default_skill = next((name for name in ("h3-prompt-writing", "example-video") if name in skills), skills[0])
         return io.Schema(
             node_id="SkillVideoPromptGenerator",
             display_name="Skill Video Prompt Generator · 视频 Skill 提示词生成器",

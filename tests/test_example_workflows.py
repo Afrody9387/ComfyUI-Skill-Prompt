@@ -33,7 +33,7 @@ def workflow_values(node, cls):
     ("image_prompt.json", plugin.SkillPromptGenerator),
     ("video_prompt.json", plugin.SkillVideoPromptGenerator),
 ])
-def test_examples_connect_and_run_without_private_content(filename, cls, monkeypatch):
+def test_examples_connect_and_run_without_private_content(filename, cls, monkeypatch, tmp_path):
     data = json.loads((ROOT / "examples" / filename).read_text(encoding="utf-8"))
     nodes = {node["id"]: node for node in data["nodes"]}
     for link_id, source, slot, target, target_slot, kind in data["links"]:
@@ -44,7 +44,17 @@ def test_examples_connect_and_run_without_private_content(filename, cls, monkeyp
     assert config["api_key"] == "" and config["model"] == ""
     config["base_url"] = "https://example.test/v1"
     config["model"] = "test-model"
+    expected_skill = "qwen-image-2-1" if filename == "image_prompt.json" else "h3-prompt-writing"
+    if filename == "video_prompt.json":
+        # A fresh public checkout obtains H3 separately; exercise the node with an installed fixture.
+        target = tmp_path / "skills" / expected_skill
+        (target / "references").mkdir(parents=True)
+        (target / "SKILL.md").write_text("Read `references/base-en.txt`.", encoding="utf-8")
+        (target / "references/base-en.txt").write_text("H3 test guide fixture.", encoding="utf-8")
+        image_module = importlib.import_module("comfyui_skill_prompt.skill_prompt_generator")
+        monkeypatch.setattr(image_module, "_SKILLS_DIR", target.parent)
     generator_values = workflow_values(nodes[2], cls)
+    assert generator_values["skill"] == expected_skill
     calls = []
     class Response:
         status_code = 200
